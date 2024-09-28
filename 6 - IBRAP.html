@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dimensionamento de Suportes e Área Total</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 350px;
+        }
+        h1 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        label {
+            font-size: 14px;
+            margin-bottom: 8px;
+            display: block;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .resultado {
+            margin-top: 20px;
+            font-size: 16px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Dimensionamento de Suportes e Área Total</h1>
+        <form id="formulario">
+            <label for="matrizTamanho">Tamanho da matriz (NxN):</label>
+            <input type="number" id="matrizTamanho" min="1" required>
+
+            <label for="alturaModulo">Altura de cada módulo (m):</label>
+            <input type="number" id="alturaModulo" step="0.01" min="0.01" required>
+
+            <label for="larguraModulo">Largura de cada módulo (m):</label>
+            <input type="number" id="larguraModulo" step="0.01" min="0.01" required>
+
+            <button type="button" onclick="calcular()">Calcular</button>
+        </form>
+
+        <div id="resultado" class="resultado"></div>
+    </div>
+
+    <script>
+        function calcular() {
+            // Pegar os valores dos inputs
+            const N = parseInt(document.getElementById('matrizTamanho').value);
+            const alturaModulo = parseFloat(document.getElementById('alturaModulo').value);
+            const larguraModulo = parseFloat(document.getElementById('larguraModulo').value);
+
+            // Calcular área de um módulo
+            const areaModulo = alturaModulo * larguraModulo;
+
+            // Calcular área total
+            const areaTotal = N * N * areaModulo;
+
+            // Calcular suportes:
+            // Suportes iniciais e finais: N + 1
+            const suportesIniciais = N + 1;
+            const suportesFinais = N + 1;
+            
+            // Suportes intermediários (correto): (N x N) - 1
+            const suportesIntermediarios = (N * N) - 1;
+
+            // Exibir o resultado
+            const resultadoDiv = document.getElementById('resultado');
+            resultadoDiv.innerHTML = `
+                <p><strong>Área total de todos os módulos:</strong> ${areaTotal.toFixed(2)} m²</p>
+                <p><strong>Quantidade de Suportes:</strong></p>
+                <p>Suportes Iniciais: ${suportesIniciais}</p>
+                <p>Suportes Finais: ${suportesFinais}</p>
+                <p>Suportes Intermediários: ${suportesIntermediarios}</p>
+            `;
+        }
+    </script>
+</body>
+</html>
